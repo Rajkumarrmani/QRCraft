@@ -46,86 +46,89 @@ private fun ShowRationaleDialogPreview() {
 fun ShowRationaleDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
+    isShow : Boolean = true,
     title: String = "Camera Required",
     body: String = "This app cannot function without camera access. To scan QR codes, please grant permission.",
 ) {
-    Dialog(
-        onDismissRequest = {
-            onDismiss
-        },
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
-            shape = RoundedCornerShape(12.dp),
+    if(isShow) {
+        Dialog(
+            onDismissRequest = {
+                onConfirm.invoke()
+            },
         ) {
-            Column(
+            Card(
                 modifier = Modifier
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.Center
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+                shape = RoundedCornerShape(12.dp),
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = title,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleSmall
-                )
-                Spacer(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
-                )
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = body,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Absolute.SpaceAround
+                        .padding(20.dp),
+                    verticalArrangement = Arrangement.Center
                 ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = title,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
+                    )
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = body,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
 
-                    Button(
-                        modifier = Modifier,
-                        onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            contentColor = MaterialTheme.colorScheme.error
-                        )
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Absolute.SpaceAround
                     ) {
-                        Text(
-                            text = "Close App",
-                            style = MaterialTheme.typography.labelLarge
-                        )
+
+                        Button(
+                            modifier = Modifier,
+                            onClick = onDismiss,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                contentColor = MaterialTheme.colorScheme.error
+                            )
+                        ) {
+                            Text(
+                                text = "Close App",
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+
+                        Button(
+                            modifier = Modifier,
+                            onClick = onConfirm,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                contentColor = MaterialTheme.colorScheme.onSurface
+                            )
+                        ) {
+                            Text(
+                                text = "Grand Access",
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+
+
                     }
-
-                    Button(
-                        modifier = Modifier,
-                        onClick = onConfirm,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            contentColor = MaterialTheme.colorScheme.onSurface
-                        )
-                    ) {
-                        Text(
-                            text = "Grand Access",
-                            style = MaterialTheme.typography.labelLarge
-                        )
-                    }
-
-
                 }
             }
         }

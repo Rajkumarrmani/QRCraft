@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,8 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -58,6 +61,9 @@ private fun ScanCodePreview() {
             onExit = {
 
             },
+            cameraPermissionGranted = {
+
+            },
             modifier = Modifier.fillMaxSize()
         )
     }
@@ -67,10 +73,12 @@ private fun ScanCodePreview() {
 @Composable
 fun ScanCode(
     onExit: () -> Unit,
+    cameraPermissionGranted:() -> Unit,
     onQrCodeDetected: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
+    var isDialogShow by rememberSaveable { mutableStateOf(true) }
     val context = LocalContext.current
     var hasCameraPermission by remember {
         mutableStateOf(
@@ -83,16 +91,21 @@ fun ScanCode(
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
+            if(granted) cameraPermissionGranted.invoke()
             hasCameraPermission = granted
+            isDialogShow = !granted
         }
     )
 
     if (!hasCameraPermission) {
         ShowRationaleDialog(
+            isShow = isDialogShow,
             onDismiss = {
+                isDialogShow = false
                 onExit.invoke()
             },
             onConfirm = {
+                isDialogShow = false
                 launcher.launch(Manifest.permission.CAMERA)
             }
         )

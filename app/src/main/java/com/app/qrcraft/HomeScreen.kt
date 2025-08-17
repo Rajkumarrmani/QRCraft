@@ -12,6 +12,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onExit: () -> Unit,
+    cameraPermissionGranted:() -> Unit,
     onQrCodeDetected: (ScanData) -> Unit,
 ) {
     Box(
@@ -80,6 +81,8 @@ fun HomeScreen(
             },
             onExit = {
                 onExit.invoke()
+            }, cameraPermissionGranted = {
+                cameraPermissionGranted.invoke()
             }
         )
     }
