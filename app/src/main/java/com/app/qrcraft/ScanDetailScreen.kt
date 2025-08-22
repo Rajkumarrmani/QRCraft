@@ -1,6 +1,7 @@
 package com.app.qrcraft
 
 import android.R.attr.name
+import android.R.attr.navigationIcon
 import android.R.attr.text
 import android.R.attr.type
 import android.annotation.SuppressLint
@@ -82,9 +83,7 @@ private fun ScanDetailScreenPreview() {
 
     val data = ScanData(
         type = "Text",
-        content = "To make a Column scrollable the verticalScroll() function of Modifier can be called upon it. This is the simplest way to allow scrolling on a Column when the content size exceeds the maximum size of the Column.\n" +
-                "\n" +
-                "The first parameter of the verticalScroll() function is state, which is a required parameter. It is used to maintain the state of the scroll, for example identifying the scroll position of the currently displayed list."
+        content = "To make a Column scrollable the verticalScroll() function of Modifier can be called upon it. This is the simplest way to allow scrolling on a Column when the content size exceeds the maximum size of the Column The first parameter of the verticalScroll() function is state, which is a required parameter. It is used to maintain the state of the scroll, for example identifying the scroll position of the currently displayed list."
     )
 
     QRCraftTheme {
@@ -118,6 +117,7 @@ fun ScanDetailScreen(
             .fillMaxSize(),
         topBar = {
             TopAppBar(
+                modifier = Modifier.fillMaxWidth(),
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onSurface,
                     titleContentColor = MaterialTheme.colorScheme.primary,
@@ -125,7 +125,8 @@ fun ScanDetailScreen(
                 title = {
                     Text(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(end = 50.dp),
                         text = "Scan Result",
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleMedium,
