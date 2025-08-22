@@ -81,7 +81,7 @@ import com.google.android.material.color.MaterialColors
 private fun ScanDetailScreenPreview() {
 
     val data = ScanData(
-        type = "Contact",
+        type = "Text",
         content = "To make a Column scrollable the verticalScroll() function of Modifier can be called upon it. This is the simplest way to allow scrolling on a Column when the content size exceeds the maximum size of the Column.\n" +
                 "\n" +
                 "The first parameter of the verticalScroll() function is state, which is a required parameter. It is used to maintain the state of the scroll, for example identifying the scroll position of the currently displayed list."
@@ -200,7 +200,7 @@ fun ScanDetailScreen(
                             },
                             text = annotatedText,
                             style = MaterialTheme.typography.bodyLarge,
-                            textAlign = if (scanData.type != "contact") TextAlign.Center
+                            textAlign = if (scanData.type == "Contact") TextAlign.Center
                             else TextAlign.Start,
                         )
 
@@ -209,9 +209,9 @@ fun ScanDetailScreen(
                                 text = if (expanded) "Show less" else "Show more",
                                 color = MaterialTheme.colorScheme.surfaceDim,
                                 modifier = Modifier
-                                    .padding(top = 10.dp, start = 10.dp)
+                                    .padding(start = 10.dp)
                                     .clickable { expanded = !expanded },
-                                textAlign = TextAlign.Start,
+                                textAlign = TextAlign.Left,
                             )
                         }
 
